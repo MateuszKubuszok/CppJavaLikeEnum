@@ -3,41 +3,69 @@
 
 #include <vector>
 
-class MyEnum {
+template<class C, class E>
+class enum_class {
 public:
-	enum class value_type;
+	typedef E               enum_type;
+	typedef std::vector<C*> values_type; 
 
 private:
-	static std::vector<MyEnum> _values;
-	
-	const value_type _enum;
-	
-	MyEnum(value_type Enum) :
-		_enum(Enum)
-	{
-		_values.push_back(*this);
+	const E _enum;
+
+protected:
+	static values_type& values() {
+		static values_type instance;
+		return instance;
 	}
 
+	static std::size_t size() {
+		return values().size();
+	}
+
+	enum_class(
+		C* c,
+		E  e
+	) :
+		_enum(e)
+		{ values().push_back(c); }
+
 public:
-	static int size() { return _values.size(); }
-	
-	static std::vector<MyEnum> values() { return _values; }
-	
-	operator value_type() const { return _enum; }
-	
+	enum_class(
+		const enum_class& e
+	) :
+		_enum(e._enum)
+		{}
+
 	int ordinal() const {
-		value_type currentValue = *this;
-		for (size_t i = 0; i < _values.size(); i++) {
-			value_type checkedValue = _values.at(i);
+		E currentValue = *this;
+		for (size_t i = 0; i < size(); i++) {
+			E checkedValue = *(values().at(i));
 			if (currentValue == checkedValue)
 				return i;
 		}
 		return -1;
 	}
-	
-	enum class value_type { TEST };
 
+	operator enum_type() const { return _enum; }
+};
+
+enum class MyEnumType { TEST };
+class MyEnum : public enum_class<MyEnum, MyEnumType> {
+	friend enum_class;
+
+protected:
+	MyEnum(
+		MyEnumType e
+	) : 
+		enum_class(this, e)
+		{}
+
+public:
 	static const MyEnum TEST;
+
+	static std::size_t size() { return enum_class::size(); }
+	
+ 	static values_type values() { return enum_class::values(); }
 };
 
 #endif
