@@ -1,11 +1,14 @@
 #include <iostream>
 #include "enum.hpp"
 
+std::vector<MyEnum> MyEnum::_values;
+const MyEnum MyEnum::TEST(MyEnum::value_type::TEST);
+
 int main() {
 	MyEnum::size();
 	
 	switch (MyEnum::TEST) {
-		case MyEnum::case_of::TEST:
+		case MyEnum::value_type::TEST:
 		break;
 	}
 	

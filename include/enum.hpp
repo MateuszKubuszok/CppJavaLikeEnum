@@ -4,42 +4,40 @@
 #include <vector>
 
 class MyEnum {
-	static std::vector<MyEnum*> _values;
-	
 public:
-	enum class MyEnumType { TEST };
+	enum class value_type;
+
+private:
+	static std::vector<MyEnum> _values;
 	
-	typedef MyEnumType case_of;
-		
-	operator MyEnumType() const { return _enum; }
+	const value_type _enum;
 	
-	static const MyEnum TEST;
+	MyEnum(value_type Enum) :
+		_enum(Enum)
+	{
+		_values.push_back(*this);
+	}
+
+public:
+	static int size() { return _values.size(); }
+	
+	static std::vector<MyEnum> values() { return _values; }
+	
+	operator value_type() const { return _enum; }
 	
 	int ordinal() const {
-		case_of currentValue = *this;
+		value_type currentValue = *this;
 		for (size_t i = 0; i < _values.size(); i++) {
-			case_of checkedValue = *(_values[i]);
+			value_type checkedValue = _values.at(i);
 			if (currentValue == checkedValue)
 				return i;
 		}
 		return -1;
 	}
-
-	static int size() { return _values.size(); }
 	
-	static std::vector<MyEnum*> values() { return _values; }
+	enum class value_type { TEST };
 
-private:
-	const MyEnumType _enum;
-	
-	MyEnum(MyEnum::MyEnumType Enum) :
-		_enum(Enum)
-	{
-		_values.push_back(this);
-	}
+	static const MyEnum TEST;
 };
-
-std::vector<MyEnum*> MyEnum::_values;
-const MyEnum MyEnum::TEST(MyEnumType::TEST);
 
 #endif
