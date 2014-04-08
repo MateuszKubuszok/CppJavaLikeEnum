@@ -20,10 +20,10 @@ int main() {
 		std::cout << "\tordinal: " << value->ordinal() << std::endl;
 		switch (*value) {
 		case DefEnum::enum_type::TEST1:
-			std::cout << "\tTEST1 matched" << std::endl;
+			std::cout << "\t" << value->name() << " matched" << std::endl;
 			break;
 		case DefEnum::enum_type::TEST2:
-			std::cout << "\tTEST2 matched" << std::endl;
+			std::cout << "\t" << value->name() << " matched" << std::endl;
 			break;
 		default:
 			std::cout << "\tNothing matched" << std::endl;
@@ -36,10 +36,10 @@ int main() {
 		std::cout << "\tordinal: " << value->ordinal() << std::endl;
 		switch (*value) {
 		case ArgsEnum::enum_type::TEST1:
-			std::cout << "\tTEST1 matched -> " << value->value() << std::endl;
+			std::cout << "\t" << value->name() << " matched -> " << value->value() << std::endl;
 			break;
 		case ArgsEnum::enum_type::TEST2:
-			std::cout << "\tTEST2 matched -> " << value->value() << std::endl;
+			std::cout << "\t" << value->name() << " matched -> " << value->value() << std::endl;
 			break;
 		default:
 			std::cout << "\tNothing matched" << std::endl;

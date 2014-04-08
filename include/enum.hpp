@@ -1,6 +1,7 @@
 #ifndef ENUM_HPP_
 #define ENUM_HPP_
 
+#include <string>
 #include <vector>
 
 /// enum_class template definition
@@ -12,7 +13,8 @@ public:
 	typedef std::vector<C*> values_type; 
 
 private:
-	const E _enum;
+	const E           _enum;
+	const std::string _name;
 
 protected:
 	static values_type& values() {
@@ -25,18 +27,23 @@ protected:
 	}
 
 	enum_class(
-		C* c,
-		E  e
+		C*          c,
+		E           e,
+		const char* name
 	) :
-		_enum(e)
+		_enum(e),
+		_name(name)
 		{ values().push_back(c); }
 
 public:
 	enum_class(
 		const enum_class& e
 	) :
-		_enum(e._enum)
+		_enum(e._enum),
+		_name(e._name)
 		{}
+
+	std::string name() const { return _name; }
 
 	int ordinal() const {
 		E currentValue = *this;
@@ -62,9 +69,9 @@ public:
 	private:
 
 #define enum_constructor(current_type) \
-	current_type(enum_type enum_choice) : enum_class(this, enum_choice) {}
+	current_type(enum_type enum_choice, const char* name) : enum_class(this, enum_choice, name) {}
 #define enum_args_constructor(current_type,args...) \
-	current_type(enum_type enum_choice, args) : enum_class(this, enum_choice),
+	current_type(enum_type enum_choice, const char* name, args) : enum_class(this, enum_choice, name),
 
 #define enum_definition_end() \
 	public: \
@@ -73,8 +80,8 @@ public:
 	};
 
 #define enum_instance(current_type,value) \
-	const current_type current_type::value(current_type::enum_type::value);
+	const current_type current_type::value(current_type::enum_type::value, #value);
 #define enum_args_instance(current_type,value,args...) \
-	const current_type current_type::value(current_type::enum_type::value, args);
+	const current_type current_type::value(current_type::enum_type::value, #value, args);
 
 #endif
