@@ -3,6 +3,8 @@
 
 #include <vector>
 
+/// enum_class template definition
+
 template<class C, class E>
 class enum_class {
 public:
@@ -49,23 +51,30 @@ public:
 	operator enum_type() const { return _enum; }
 };
 
-enum class MyEnumType { TEST };
-class MyEnum : public enum_class<MyEnum, MyEnumType> {
-	friend enum_class;
+/// macro helpers definitions
 
-protected:
-	MyEnum(
-		MyEnumType e
-	) : 
-		enum_class(this, e)
-		{}
+#define enum_definition_begin(current_type,values...) \
+	enum class current_type##_values_ { values }; \
+	class current_type final : public enum_class<current_type,current_type##_values_> { \
+	public: \
+		friend enum_class; \
+		static const current_type values; \
+	private:
 
-public:
-	static const MyEnum TEST;
+#define enum_constructor(current_type) \
+	current_type(enum_type enum_choice) : enum_class(this, enum_choice) {}
+#define enum_args_constructor(current_type,args...) \
+	current_type(enum_type enum_choice, args) : enum_class(this, enum_choice),
 
-	static std::size_t size() { return enum_class::size(); }
-	
- 	static values_type values() { return enum_class::values(); }
-};
+#define enum_definition_end() \
+	public: \
+		static std::size_t size() { return enum_class::size(); } \
+	 	static values_type values() { return enum_class::values(); } \
+	};
+
+#define enum_instance(current_type,value) \
+	const current_type current_type::value(current_type::enum_type::value);
+#define enum_args_instance(current_type,value,args...) \
+	const current_type current_type::value(current_type::enum_type::value, args);
 
 #endif
