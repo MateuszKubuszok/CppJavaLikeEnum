@@ -7,19 +7,19 @@ namespace test {
 
 enum_definition_begin(DefEnum, TEST1, TEST2)
 protected:
-	enum_constructor(DefEnum)
+  enum_constructor(DefEnum)
 enum_definition_end()
 
 enum_definition_begin(ArgsEnum, TEST1, TEST2)
-	const bool __value;
+  const bool __value;
 
 protected:
-	enum_args_constructor(ArgsEnum, const bool value)
-		__value(value)
-		{}
+  enum_args_constructor(ArgsEnum, const bool value)
+    __value(value)
+    {}
 
 public:
-	bool value() const { return __value; }
+  bool value() const { return __value; }
 enum_definition_end()
 
 }
