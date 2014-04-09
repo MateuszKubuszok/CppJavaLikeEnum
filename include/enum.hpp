@@ -1,6 +1,7 @@
 #ifndef ENUM_HPP_
 #define ENUM_HPP_
 
+#include <assert.h>
 #include <string>
 #include <vector>
 
@@ -49,6 +50,7 @@ public:
     _ordinal(e._ordinal)
     {}
 
+  enum_type get() const { return _enum; }
   std::string name() const { return _name; }
   std::size_t ordinal() const { return _ordinal; }
   operator enum_type() const { return _enum; }
@@ -66,6 +68,16 @@ public:
     static const ename evalues; \
     static std::size_t size() { return enum_parent::size(); } \
     static values_type values() { return enum_parent::values(); } \
+    friend ename& operator*(enum_type value) { \
+      ename* returned = nullptr; \
+      for (ename* checked : values()) \
+        if (checked->get() == value) { \
+          returned = checked; \
+          break; \
+        } \
+      assert(returned != nullptr); \
+      return *returned; \
+    } \
   private:
 
 #define enum_constructor(ename) \
