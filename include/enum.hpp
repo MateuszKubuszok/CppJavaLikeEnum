@@ -15,6 +15,7 @@ public:
 private:
   const E           _enum;
   const std::string _name;
+  const std::size_t _ordinal;
 
 protected:
   static values_type& values() {
@@ -32,7 +33,8 @@ protected:
     const char* name
   ) :
     _enum(e),
-    _name(name)
+    _name(name),
+    _ordinal(size())
     { values().push_back(c); }
 
 public:
@@ -40,20 +42,13 @@ public:
     const enum_class& e
   ) :
     _enum(e._enum),
-    _name(e._name)
+    _name(e._name),
+    _ordinal(e._ordinal)
     {}
 
   std::string name() const { return _name; }
 
-  int ordinal() const {
-    E currentValue = *this;
-    for (size_t i = 0; i < size(); i++) {
-      E checkedValue = *(values().at(i));
-      if (currentValue == checkedValue)
-        return i;
-    }
-    return -1;
-  }
+  std::size_t ordinal() const { return _ordinal; }
 
   operator enum_type() const { return _enum; }
 };
