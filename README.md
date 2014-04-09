@@ -3,7 +3,7 @@ CppJavaLikeEnum
 
 Short attempt to make a Java-style C++ enum (require C++11).
 
-This small project was made as an excercise and for fun. Its practical usage is at least debatable.
+This small project was made as an exercise and for fun. Its practical usage is at least debatable.
 
 Simple enum definition
 ---------------
