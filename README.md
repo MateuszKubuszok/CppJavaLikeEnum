@@ -3,6 +3,8 @@ CppJavaLikeEnum
 
 Short attempt to make a Java-style C++ enum (require C++11).
 
+This small project was made as an excercise and for fun. Its practical usage is at least debatable.
+
 Simple enum definition
 ---------------
 
@@ -41,7 +43,7 @@ Customized enum definition
     enum_args_instance(SimpleEnum, False, false);
     enum_args_instance(SimpleEnum, True,  true);
     
-Usage
+Usage examples
 ---------------
 
     std::cout << "Size of SimpleEnum: " << SimpleEnum::size() << std::endl; 
@@ -52,6 +54,17 @@ Usage
     for(CustomizedEnum* e : CustomizedEnum::values())
         std::cout << e->name() << " -> " << e->ordinal() << ", value: " << e->value() << std::endl;
         
-
-    
-    
+    switch(SimpleEnum::Value1) {
+    case_of(SimpleEnum,Value1):
+        std::cout << SimpleEnum::Value1.name() << std::endl;
+        break;
+    case_of(SimpleEnum,Value2):
+        std::cout << SimpleEnum::Value2.name() << std::endl;
+        break;
+    case_of(SimpleEnum,Value3):
+        std::cout << SimpleEnum::Value2.name() << std::endl;
+        break;
+    default:
+        std::cout << "other value?" << std::endl;
+        break;
+    }
