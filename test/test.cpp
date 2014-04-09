@@ -21,8 +21,8 @@ int main() {
   for (DefEnum* value : DefEnum::values()) {
     cout << "\tordinal: " << value->ordinal() << endl;
     switch (*value) {
-    case DefEnum::enum_type::TEST1:
-    case DefEnum::enum_type::TEST2:
+    case_of(DefEnum,TEST1):
+    case_of(DefEnum,TEST2):
       cout << "\t" << value->name() << " matched" << endl;
       break;
     default:
@@ -35,8 +35,8 @@ int main() {
   for (ArgsEnum* value : ArgsEnum::values()) {
     cout << "\tordinal: " << value->ordinal() << endl;
     switch (*value) {
-    case ArgsEnum::enum_type::TEST1:
-    case ArgsEnum::enum_type::TEST2:
+    case_of(ArgsEnum,TEST1):
+    case_of(ArgsEnum,TEST2):
       cout << "\t" << value->name() << " matched -> " << value->value() << endl;
       break;
     default:

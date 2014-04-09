@@ -84,4 +84,7 @@ public:
 #define enum_args_instance(current_type,value,args...) \
   const current_type current_type::value(current_type::enum_type::value, #value, args);
 
+#define case_of(current_type,value) \
+  case current_type::enum_type::value
+
 #endif
