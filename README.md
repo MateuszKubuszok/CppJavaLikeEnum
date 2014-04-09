@@ -1,9 +1,15 @@
-CppJavaLikeEnum
+C++ Java-like enum
 ===============
 
 Short attempt to make a Java-style C++ enum (require C++11).
 
 This small project was made as an exercise and for fun. Its practical usage is at least debatable.
+
+How to use
+---------------
+
+Just include `enum.hpp` header.
+
 
 Simple enum definition
 ---------------
