@@ -6,11 +6,14 @@
 
 /// enum_class template definition
 
+namespace enums {
+
 template<class C, class E>
 class enum_class {
 public:
   typedef E               enum_type;
-  typedef std::vector<C*> values_type; 
+  typedef std::vector<C*> values_type;
+  typedef enum_class<C,E> enum_parent;
 
 private:
   const E           _enum;
@@ -47,39 +50,49 @@ public:
     {}
 
   std::string name() const { return _name; }
-
   std::size_t ordinal() const { return _ordinal; }
-
   operator enum_type() const { return _enum; }
-};
+}; // class enum_class
+
+} // namespace enums
 
 /// macro helpers definitions
 
-#define enum_definition_begin(current_type,values...) \
-  enum class current_type##_values_ { values }; \
-  class current_type final : public enum_class<current_type,current_type##_values_> { \
+#define enum_begin(ename,evalues...) \
+  enum class ename##_raw_values { evalues }; \
+  class ename final : public enums::enum_class<ename,ename##_raw_values> { \
   public: \
-    friend enum_class; \
-    static const current_type values; \
+    friend enums::enum_class<ename,ename##_raw_values>; \
+    static const ename evalues; \
+    static std::size_t size() { return enum_parent::size(); } \
+    static values_type values() { return enum_parent::values(); } \
   private:
 
-#define enum_constructor(current_type) \
-  current_type(enum_type enum_choice, const char* name) : enum_class(this, enum_choice, name) {}
-#define enum_args_constructor(current_type,args...) \
-  current_type(enum_type enum_choice, const char* name, args) : enum_class(this, enum_choice, name),
+#define enum_constructor(ename) \
+  ename( \
+    enum_type   enum_choice, \
+    const char* name \
+  ) : \
+    enum_parent(this, enum_choice, name) \
+    {}
+#define enum_args_constructor(ename,args...) \
+  ename( \
+    enum_type   enum_choice, \
+    const char* name, \
+    args \
+  ) : \
+    enum_parent(this, enum_choice, name), \
+    // custom properties and constructor body goes here
 
-#define enum_definition_end() \
-  public: \
-    static std::size_t size() { return enum_class::size(); } \
-     static values_type values() { return enum_class::values(); } \
+#define enum_end() \
   };
 
-#define enum_instance(current_type,value) \
-  const current_type current_type::value(current_type::enum_type::value, #value);
-#define enum_args_instance(current_type,value,args...) \
-  const current_type current_type::value(current_type::enum_type::value, #value, args);
+#define enum_instance(ename,value) \
+  const ename ename::value(ename::enum_type::value, #value)
+#define enum_args_instance(ename,value,args...) \
+  const ename ename::value(ename::enum_type::value, #value, args)
 
-#define case_of(current_type,value) \
-  case current_type::enum_type::value
+#define case_of(ename,value) \
+  case ename::enum_type::value
 
 #endif

@@ -5,12 +5,12 @@
 
 namespace test { 
 
-enum_definition_begin(DefEnum, TEST1, TEST2)
+enum_begin(DefEnum, TEST1, TEST2)
 protected:
   enum_constructor(DefEnum)
-enum_definition_end()
+enum_end()
 
-enum_definition_begin(ArgsEnum, TEST1, TEST2)
+enum_begin(ArgsEnum, TEST1, TEST2)
   const bool __value;
 
 protected:
@@ -20,7 +20,7 @@ protected:
 
 public:
   bool value() const { return __value; }
-enum_definition_end()
+enum_end()
 
 }
 

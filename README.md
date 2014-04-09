@@ -15,11 +15,11 @@ Simple enum definition
 ---------------
 
     // In .hpp file
-    enum_definition_begin(SimpleEnum, Value1, Value2, Value3)
+    enum_begin(SimpleEnum, Value1, Value2, Value3)
     protected:
       enum_constructor(SimpleEnum)
     
-    enum_definition_end()
+    enum_end()
     
     
     // In .cpp file
@@ -31,7 +31,7 @@ Customized enum definition
 ---------------
 
     // In .hpp file
-    enum_definition_begin(CustomizedEnum, False True)
+    enum_begin(CustomizedEnum, False True)
       const bool _custom_value;
 
     protected:
@@ -42,7 +42,7 @@ Customized enum definition
     public:
       bool custom_value() const { return _custom_value; }
     
-    enum_definition_end()
+    enum_end()
     
     
      // In .cpp file
