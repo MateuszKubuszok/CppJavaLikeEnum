@@ -50,6 +50,8 @@ public:
     _ordinal(e._ordinal)
     {}
 
+  virtual ~enum_class() {}
+
   enum_type get() const { return _enum; }
   std::string name() const { return _name; }
   std::size_t ordinal() const { return _ordinal; }
